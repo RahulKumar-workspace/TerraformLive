@@ -1,0 +1,9 @@
+# SSH private keys
+*.pem
+id_rsa
+id_ed25519
+terra-key-ec2
+terra-key-ec2*
+
+# Keep public keys
+!*.pub
