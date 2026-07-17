@@ -1,7 +1,7 @@
 # key pair - for login
 resource aws_key_pair my_key {
   key_name = "terra-key-ec2"
-  public_key = file("terra-key-ec2.pub") # it will read content from this file
+  public_key = file(pathexpand("~/.ssh/terra-key-ec2.pub")) # it will read content from this file
 }
 
 # VPC & Security Group
@@ -45,11 +45,15 @@ resource aws_security_group my_security_group {
   }
 
 # Outbound Rules
-  egress = {
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1" // semantically equivalent to all
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "All access open outbound"
 
   }
 }
-
 
 # ec2 instance
 
