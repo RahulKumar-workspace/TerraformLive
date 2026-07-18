@@ -67,11 +67,11 @@ ingress {
 resource "aws_instance" "my_instance" {
   key_name = aws_key_pair.my_key.key_name # Interpolation
   security_groups = [aws_security_group.my_security_group.name]
-  instance_type = "t2.micro"
-  ami = "ami-0b6d9d3d33ba97d99" # Ubuntu
+  instance_type = var.ec2_instance_type
+  ami = var.ec2_ami_id # Ubuntu
 
   root_block_device {
-    volume_size = 15
+    volume_size = var.ec2_root_storage_size
     volume_type = "gp3"
   }
 
