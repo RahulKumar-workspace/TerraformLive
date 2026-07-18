@@ -70,6 +70,9 @@ resource "aws_instance" "my_instance" {
   instance_type = var.ec2_instance_type
   ami = var.ec2_ami_id # Ubuntu
 
+  user_data = file("install_nginx.sh") 
+  # This script will run when the instance is being created for the FIRST time
+
   root_block_device {
     volume_size = var.ec2_root_storage_size
     volume_type = "gp3"
