@@ -80,6 +80,6 @@ resource "aws_instance" "my_instance" {
   }
 
   tags = {
-    Name = "TWS-Junoon-Automate-July19"
+    Name = "TWS-Junoon-Automate-July19-${count.index}"
   }
 }
