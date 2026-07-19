@@ -99,7 +99,11 @@ resource "aws_instance" "my_instance" {
     TWS-Junoon-Automate-micro = "t2.micro"
     TWS-Junoon-Automate-medium = "t2.medium"
   }) # Meta Argument
-  
+
+  depends_on = [ aws_security_group.my_security_group, aws_key_pair.my_key ]
+# Used when Terraform cannot automatically detect the dependency.
+# It just means "Create these resources first, and only then create this resource."
+
   key_name        = aws_key_pair.my_key.key_name # Interpolation
   security_groups = [aws_security_group.my_security_group.name]
   instance_type = each.value
