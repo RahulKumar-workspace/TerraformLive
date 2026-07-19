@@ -20,9 +20,20 @@ output "ec2_private_ip" {
 
 
 # And This is how we write Output when we use 'for_each' as meta argument:-
-
 output "ec2_public_ip" {
   value = [
     for key in aws_instance.my_instance : key.public_ip
+  ]
+}
+
+output "ec2_public_dns" {
+  value = [
+    for key in aws_instance.my_instance : key.public_dns
+  ]
+}
+
+output "ec2_private_ip" {
+  value = [
+    for key in aws_instance.my_instance : key.private_ip
   ]
 }
