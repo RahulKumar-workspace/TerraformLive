@@ -65,6 +65,7 @@ resource "aws_security_group" "my_security_group" {
 
 # ec2 instance
 resource "aws_instance" "my_instance" {
+  count = 3 #Meta Argument -> It will make these many resources.
   key_name        = aws_key_pair.my_key.key_name # Interpolation
   security_groups = [aws_security_group.my_security_group.name]
   instance_type   = var.ec2_instance_type
@@ -79,6 +80,6 @@ resource "aws_instance" "my_instance" {
   }
 
   tags = {
-    Name = "TWS-Junoon-Automate-July17"
+    Name = "TWS-Junoon-Automate-July19"
   }
 }
