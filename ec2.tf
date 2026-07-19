@@ -63,9 +63,15 @@ resource "aws_security_group" "my_security_group" {
   }
 }
 
-# ec2 instance
+/*
+# ec2 instance Using 'Count' as meta argument.
 resource "aws_instance" "my_instance" {
-  count = 3 #Meta Argument -> It will make these many resources.
+  count = 2 #Meta Argument -> It will make these many resources.
+
+  for_each = tomap({
+    TWS-Junoon-Automate-micro = "t2.micro"
+    TWS-Junoon-Automate-medium = "t2.medium"
+  }) # Meta Argument
   key_name        = aws_key_pair.my_key.key_name # Interpolation
   security_groups = [aws_security_group.my_security_group.name]
   instance_type   = var.ec2_instance_type
@@ -81,5 +87,33 @@ resource "aws_instance" "my_instance" {
 
   tags = {
     Name = "TWS-Junoon-Automate-July19-${count.index}"
+  }
+}
+*/
+
+
+
+# ec2 instance Using 'for_each' as meta argument.
+resource "aws_instance" "my_instance" {
+  for_each = tomap({
+    TWS-Junoon-Automate-micro = "t2.micro"
+    TWS-Junoon-Automate-medium = "t2.medium"
+  }) # Meta Argument
+  
+  key_name        = aws_key_pair.my_key.key_name # Interpolation
+  security_groups = [aws_security_group.my_security_group.name]
+  instance_type = each.value
+  ami             = var.ec2_ami_id # Ubuntu
+
+  user_data = file("install_nginx.sh")
+  # This script will run when the instance is being created for the FIRST time
+
+  root_block_device {
+    volume_size = var.ec2_root_storage_size
+    volume_type = "gp3"
+  }
+
+  tags = {
+    Name = each.key
   }
 }
