@@ -96,17 +96,17 @@ resource "aws_instance" "my_instance" {
 # ec2 instance Using 'for_each' as meta argument.
 resource "aws_instance" "my_instance" {
   for_each = tomap({
-    TWS-Junoon-Automate-micro = "t2.micro"
+    TWS-Junoon-Automate-micro  = "t2.micro"
     TWS-Junoon-Automate-medium = "t2.medium"
   }) # Meta Argument
 
-  depends_on = [ aws_security_group.my_security_group, aws_key_pair.my_key ]
-# Used when Terraform cannot automatically detect the dependency.
-# It just means "Create these resources first, and only then create this resource."
+  depends_on = [aws_security_group.my_security_group, aws_key_pair.my_key]
+  # Used when Terraform cannot automatically detect the dependency.
+  # It just means "Create these resources first, and only then create this resource."
 
   key_name        = aws_key_pair.my_key.key_name # Interpolation
   security_groups = [aws_security_group.my_security_group.name]
-  instance_type = each.value
+  instance_type   = each.value
   ami             = var.ec2_ami_id # Ubuntu
 
   user_data = file("install_nginx.sh")
