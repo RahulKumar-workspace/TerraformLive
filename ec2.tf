@@ -112,7 +112,7 @@ resource "aws_instance" "my_instance" {
   # This script will run when the instance is being created for the FIRST time
 
   root_block_device {
-    volume_size = var.ec2_root_storage_size
+    volume_size = var.env == "prod" ? 20 : var.ec2_default_root_storage_size
     volume_type = "gp3"
   }
 
