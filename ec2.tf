@@ -6,7 +6,6 @@ resource "aws_key_pair" "my_key" {
 
 # VPC & Security Group
 resource "aws_default_vpc" "default" {
-
 }
 
 resource "aws_security_group" "my_security_group" {
