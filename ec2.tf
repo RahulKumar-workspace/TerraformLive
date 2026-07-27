@@ -91,7 +91,6 @@ resource "aws_instance" "my_instance" {
 */
 
 
-
 # ec2 instance Using 'for_each' as meta argument.
 resource "aws_instance" "my_instance" {
   for_each = tomap({
